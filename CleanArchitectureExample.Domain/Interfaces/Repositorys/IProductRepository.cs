@@ -13,5 +13,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories.Inter
         Task<IEnumerable<Product>> GetAllAsync();
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
+
+        Task DeleteAsync(Product product);
     }
 }

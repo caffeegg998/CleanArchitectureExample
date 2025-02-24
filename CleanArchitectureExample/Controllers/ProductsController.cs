@@ -1,7 +1,9 @@
 ﻿using CleanArchitectureExample.Application.Features.Commands;
 using CleanArchitectureExample.Application.Features.Queries;
+using CleanArchitectureExample.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static CleanArchitectureExample.Application.Features.Commands.ProductCommand;
 
 namespace CleanArchitectureExample.API.Controllers
 {
@@ -26,9 +28,12 @@ namespace CleanArchitectureExample.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(Guid id)
         {
-            var product = await _mediator.Send(new GetProductByIdQuery(id));
+            Product product = await _mediator.Send(new GetProductByIdQuery(id));
             return product is not null ? Ok(product) : NotFound();
         }
+
+
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] UpdateProductCommand command)
         {
@@ -38,6 +43,19 @@ namespace CleanArchitectureExample.API.Controllers
             }
 
             var result = await _mediator.Send(command);
+
+            if (!result)
+            {
+                return NotFound("Product not found.");
+            }
+
+            return Ok("Product Updated");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(Guid id)
+        {
+            var result = await _mediator.Send(new DeleteProductCommand(id));
 
             if (!result)
             {

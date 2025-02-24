@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArchitectureExample.Domain.Entities;
+
 using CleanArchitectureExample.Infrastructure.Persistence.DbContexts;
 using CleanArchitectureExample.Infrastructure.Persistence.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,14 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
 
             // Đợi quá trình lưu vào DB
             //await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Product product)
+        {
+            if (product != null)
+            {
+                 _context.Products.Remove(product);
+            }
         }
     }
 }

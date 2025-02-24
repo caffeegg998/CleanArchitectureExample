@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureExample.API", "CleanArchitectureExample\CleanArchitectureExample.API.csproj", "{AAC07C26-01D8-4A99-8E8A-25766D1344EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitectureExample.API", "CleanArchitectureExample\CleanArchitectureExample.API.csproj", "{AAC07C26-01D8-4A99-8E8A-25766D1344EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{441AF0A7-0BFA-4498-B3E9-4E253554B7CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureExample.Domain", "CleanArchitectureExample.Domain\CleanArchitectureExample.Domain.csproj", "{6571D960-E904-425E-BB6F-D39616543889}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitectureExample.Domain", "CleanArchitectureExample.Domain\CleanArchitectureExample.Domain.csproj", "{6571D960-E904-425E-BB6F-D39616543889}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureExample.Application", "CleanArchitectureExample.Application\CleanArchitectureExample.Application.csproj", "{0D0F8F83-CEFA-4821-BB7B-15667133EF96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitectureExample.Application", "CleanArchitectureExample.Application\CleanArchitectureExample.Application.csproj", "{0D0F8F83-CEFA-4821-BB7B-15667133EF96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureExample.Infrastructure", "CleanArchitectureExample.Infrastructure\CleanArchitectureExample.Infrastructure.csproj", "{8749CB8B-D281-4B6D-BB7C-EE872D2CCC84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitectureExample.Infrastructure", "CleanArchitectureExample.Infrastructure\CleanArchitectureExample.Infrastructure.csproj", "{8749CB8B-D281-4B6D-BB7C-EE872D2CCC84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitectureExample.Tests", "CleanArchitectureExample.Tests\CleanArchitectureExample.Tests.csproj", "{5E691B2F-BB89-4628-A37A-F01173EAF4C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitectureExample.Tests", "CleanArchitectureExample.Tests\CleanArchitectureExample.Tests.csproj", "{5E691B2F-BB89-4628-A37A-F01173EAF4C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

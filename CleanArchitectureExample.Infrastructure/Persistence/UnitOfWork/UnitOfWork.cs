@@ -3,25 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CleanArchitectureExample.Domain.Interfaces;
 using CleanArchitectureExample.Infrastructure.Persistence.DbContexts;
-using CleanArchitectureExample.Infrastructure.Persistence.Repositories.Interfaces;
 using CleanArchitectureExample.Infrastructure.Persistence.Repositories;
+
+using CleanArchitectureExample.Infrastructure.Persistence.Repositories.Interfaces;
 
 namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private readonly IdentityDbContext _identityDbContext;
         public IProductRepository ProductRepository { get; }
 
-        public UnitOfWork(ApplicationDbContext context)
+        public IUserProfileRepository UserProfileRepository { get; }
+
+        public UnitOfWork(ApplicationDbContext context,IdentityDbContext identityDbContext)
         {
             _context = context;
+            _identityDbContext = identityDbContext;
             ProductRepository = new ProductRepository(_context);
+            UserProfileRepository = new UserProfileRepository(_identityDbContext);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();
 
         public void Dispose() => _context.Dispose();
+
+        public async Task<int> CompleteIdentityAsync() => await _identityDbContext.SaveChangesAsync();
+
     }
 }
