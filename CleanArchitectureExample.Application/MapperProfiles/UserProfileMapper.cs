@@ -14,8 +14,16 @@ namespace CleanArchitectureExample.Application.MapperProfiles
     {
         public UserProfileMapper()
         {
-            CreateMap<UserProfile, UserProfileDTO>();
-            CreateMap<UserProfileDTO, UserProfile>();
+            //CreateMap<UserProfile, UserProfileDTO>();
+            //CreateMap<UserProfileDTO, UserProfile>();
+            CreateMap<UserProfileDTO, UserProfile>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId.ToString()))
+                .ForMember(dest => dest.DepartmentId, opt => opt.MapFrom(src => src.Department))
+                .ForMember(dest => dest.Department, opt => opt.Ignore());
+
+            CreateMap<UserProfile, UserProfileDTO>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.DepartmentId));
         }
     }
 }

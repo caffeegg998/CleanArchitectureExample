@@ -100,7 +100,7 @@ namespace CleanArchitectureExample.API
                 //endpoints.MapHub<EmployeeHub>("/employeeHub");
             });
 
-            //CreateRoles(services).Wait();
+            CreateRoles(services).Wait();
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -115,13 +115,11 @@ namespace CleanArchitectureExample.API
             {
                 await RoleManager.CreateAsync(new IdentityRole("Admin"));
                 await RoleManager.CreateAsync(new IdentityRole("Manager"));
-                await RoleManager.CreateAsync(new IdentityRole("Supervisor"));
                 await RoleManager.CreateAsync(new IdentityRole("Staff"));
-                await RoleManager.CreateAsync(new IdentityRole("Operator"));
-                await RoleManager.CreateAsync(new IdentityRole("Supporter"));
-                await RoleManager.CreateAsync(new IdentityRole("TL"));
-                await RoleManager.CreateAsync(new IdentityRole("QV"));
-                await RoleManager.CreateAsync(new IdentityRole("TS"));
+                await RoleManager.CreateAsync(new IdentityRole("Board of Directors"));
+                await RoleManager.CreateAsync(new IdentityRole("Accountant"));
+                await RoleManager.CreateAsync(new IdentityRole("Marketing"));
+                await RoleManager.CreateAsync(new IdentityRole("Sale"));
                 await RoleManager.CreateAsync(new IdentityRole("Unknows"));
             }
 

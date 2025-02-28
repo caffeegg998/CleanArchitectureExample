@@ -13,7 +13,7 @@ using static CleanArchitectureExample.Application.Features.Commands.UserCommands
 
 namespace CleanArchitectureExample.Application.Features.Handlers
 {
-    public class UserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
+    public class UserCommandHandler : IRequestHandler<CreateUserCommand, Guid>, IRequestHandler<GetUserByIdCommand, UserProfileDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -32,17 +32,33 @@ namespace CleanArchitectureExample.Application.Features.Handlers
                 FullName = request.userProfileDTO.FullName,
                 DateOfBirth = request.userProfileDTO.DateOfBirth,
                 Department = request.userProfileDTO.Department,
-                Factory = request.userProfileDTO.Factory,
+                MaNhanVien = request.userProfileDTO.MaNhanVien,
                 MagnetCode = request.userProfileDTO.MagnetCode,
-                CVNCode = request.userProfileDTO.CVNCode,
+                CreateAt = DateTime.Now.ToUniversalTime()
+
             };
 
             UserProfile userProfile = _mapper.Map<UserProfile>(user); // Chuyển đổi User sang UserDTO
             await _unitOfWork.UserProfileRepository.SaveUser(userProfile);
             await _unitOfWork.CompleteIdentityAsync();
 
-            return user.UserId;
+            return Guid.Parse(user.UserId);
             
         }
+
+        public async Task<UserProfileDTO> Handle(GetUserByIdCommand request, CancellationToken cancellationToken)
+        {
+
+            UserProfile? userProfile = await _unitOfWork.UserProfileRepository.GetUser(request.Id);
+
+            if (userProfile == null)
+            {
+                return new UserProfileDTO();
+            }
+
+            UserProfileDTO userProfileDTO = _mapper.Map<UserProfileDTO>(userProfile);
+            return userProfileDTO;
+        }
+        
     }
 }

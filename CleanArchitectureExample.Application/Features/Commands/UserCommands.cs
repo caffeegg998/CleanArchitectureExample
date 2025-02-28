@@ -28,5 +28,10 @@ namespace CleanArchitectureExample.Application.Features.Commands
 
             public Guid Id { get; set; }
         }
+        public class GetUserByIdCommand : IRequest<UserProfileDTO>
+        {
+          
+            public string Id { get; set; }
+        }
     }
 }

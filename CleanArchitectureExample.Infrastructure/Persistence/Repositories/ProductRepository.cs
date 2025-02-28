@@ -35,7 +35,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
             }
 
             // Cập nhật các giá trị từ product vào existingProduct
-            existingProduct.Name = product.Name;
+            existingProduct.ProductName = product.ProductName;
             existingProduct.Price = product.Price;
 
             // Đánh dấu entity là đã thay đổi

@@ -13,7 +13,7 @@ namespace CleanArchitectureExample.Application.Features.Handlers
 {
     public class ProductCommandHandler :
         IRequestHandler<GetProductByIdQuery, Product?>,
-        IRequestHandler<CreateProductCommand, Guid>,
+        IRequestHandler<CreateProductCommand, int>,
         IRequestHandler<DeleteProductCommand, bool>,
         IRequestHandler<UpdateProductCommand, bool>
     {
@@ -28,12 +28,12 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             return await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
         }
 
-        public async Task<Guid> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {
-                Id = Guid.NewGuid(),
-                Name = request.Name,
+                
+                ProductName = request.Name,
                 Price = request.Price
             };
 
@@ -71,7 +71,7 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
             if (product == null) return false;
 
-            product.Name = request.Name;
+            product.ProductName = request.Name;
             product.Price = request.Price;
 
             await _unitOfWork.ProductRepository.UpdateAsync(product);

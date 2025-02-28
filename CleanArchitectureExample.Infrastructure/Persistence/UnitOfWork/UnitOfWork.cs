@@ -14,24 +14,24 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private readonly IdentityDbContext _identityDbContext;
+        //private readonly IdentityDbContext _identityDbContext;
         public IProductRepository ProductRepository { get; }
 
         public IUserProfileRepository UserProfileRepository { get; }
 
-        public UnitOfWork(ApplicationDbContext context,IdentityDbContext identityDbContext)
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            _identityDbContext = identityDbContext;
+            //_identityDbContext = identityDbContext;
             ProductRepository = new ProductRepository(_context);
-            UserProfileRepository = new UserProfileRepository(_identityDbContext);
+            UserProfileRepository = new UserProfileRepository(_context);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();
 
         public void Dispose() => _context.Dispose();
 
-        public async Task<int> CompleteIdentityAsync() => await _identityDbContext.SaveChangesAsync();
+        public async Task<int> CompleteIdentityAsync() => await _context.SaveChangesAsync();
 
     }
 }

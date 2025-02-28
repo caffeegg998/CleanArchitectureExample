@@ -1,6 +1,7 @@
 ﻿
 using CleanArchitectureExample.Application.DTOs;
 using CleanArchitectureExample.Application.DTOs.Account;
+using CleanArchitectureExample.Domain.Entities.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Authorization;
@@ -95,16 +96,16 @@ namespace SparePartStockAPI.Controllers.Identity
                 switch (model.detectUser)
                 {
                     case 1:
-                        role = "TL";
+                        role = "Board of Directors";
                         break;
                     case 2:
-                        role = "QV";
+                        role = "Accountant";
                         break;
                     case 3:
-                        role = "TS";
+                        role = "Marketing";
                         break ;
                     default:
-                        role = "TL";
+                        role = "Sale";
                         break;
                 }
 
@@ -119,12 +120,10 @@ namespace SparePartStockAPI.Controllers.Identity
             {
                 UserProfileDTO userProfile = new UserProfileDTO
                 {
-                    UserId = Guid.Parse(user.Id),
+                    UserId = user.Id,
                     FullName = model.FullName,
                     DateOfBirth = model.DateOfBirth,
                     Department = model.Department,
-                    Factory = role
-
                 };
 
                 CreateUserCommand createUserCommand = new CreateUserCommand();
@@ -200,6 +199,11 @@ namespace SparePartStockAPI.Controllers.Identity
             //var userProfile = _userProfileService.GetUserProfile(userId);
             var roles = await _userManager.GetRolesAsync(user);
 
+            GetUserByIdCommand getUserByIdCommand = new GetUserByIdCommand();
+            getUserByIdCommand.Id = userId;
+
+            UserProfileDTO userProfileDTO = await _mediator.Send(getUserByIdCommand);
+
             if (user == null)
             {
                 return NotFound("Không tìm thấy thông tin người dùng");
@@ -208,7 +212,7 @@ namespace SparePartStockAPI.Controllers.Identity
             {
                 UserName = user.UserName,
                 Email = user.Email,
-                //UserProfile = userProfile,
+                UserProfile = userProfileDTO,
                 Roles = roles
             });
         }

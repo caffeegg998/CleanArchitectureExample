@@ -15,7 +15,7 @@ namespace CleanArchitectureExample.Application.Features.Commands
             public string Name { get; set; }
             public decimal Price { get; set; }
         }
-        public class CreateProductCommand : IRequest<Guid>
+        public class CreateProductCommand : IRequest<int>
         {
             public string Name { get; set; } = string.Empty;
             public decimal Price { get; set; }

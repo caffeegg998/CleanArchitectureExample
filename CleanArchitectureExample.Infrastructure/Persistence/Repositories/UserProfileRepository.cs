@@ -13,8 +13,9 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
 {
     public class UserProfileRepository : IUserProfileRepository
     {
-        private readonly IdentityDbContext _identityDbContext;
-        public UserProfileRepository(IdentityDbContext identityDbContext)
+        //private readonly IdentityDbContext _identityDbContext;
+        private readonly ApplicationDbContext _identityDbContext;
+        public UserProfileRepository(ApplicationDbContext identityDbContext)
         {
             _identityDbContext = identityDbContext;
         }
@@ -37,11 +38,11 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
 
             // Cập nhật các giá trị từ product vào existingProduct
             existingUser.DateOfBirth = userProfile.DateOfBirth;
-            existingUser.Factory = userProfile.Factory;
+           
             existingUser.Department = userProfile.Department;
             existingUser.FullName = userProfile.FullName;
-            existingUser.CVNCode = userProfile.CVNCode;
-            existingUser.MagnetCode = userProfile.MagnetCode;
+            existingUser.MaNhanVien = userProfile.MaNhanVien;
+      
 
             // Đánh dấu entity là đã thay đổi
             _identityDbContext.UserProfiles.Update(existingUser);

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace SparePartStockAPI.Controllers.Identity
@@ -57,14 +58,32 @@ namespace SparePartStockAPI.Controllers.Identity
         [HttpGet("getUsersByRoleId")]
         public async Task<IActionResult> FindUsersByRoleId(string id)
         {
-            IdentityRole role = await _roleManager.FindByIdAsync(id);
-            List<IdentityUser> members = new List<IdentityUser>();
-            List<IdentityUser> nonMembers = new List<IdentityUser>();
-            foreach (IdentityUser identityUser in _userManager.Users)
+            //IdentityRole role = await _roleManager.FindByIdAsync(id);
+            //List<IdentityUser> members = new List<IdentityUser>();
+            //List<IdentityUser> nonMembers = new List<IdentityUser>();
+            //foreach (IdentityUser identityUser in _userManager.Users)
+            //{
+            //    var list = await _userManager.IsInRoleAsync(identityUser, role.Name) ? members : nonMembers;
+            //    list.Add(identityUser);
+            //}
+            //return Ok(new RoleEdit
+            //{
+            //    Role = role,
+            //    Members = members,
+            //    NonMembers = nonMembers
+            //});
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
             {
-                var list = await _userManager.IsInRoleAsync(identityUser, role.Name) ? members : nonMembers;
-                list.Add(identityUser);
+                return NotFound("Không tìm thấy vai trò");
             }
+
+            var usersInRole = await _userManager.GetUsersInRoleAsync(role.Name);
+            var allUsers = await _userManager.Users.ToListAsync();
+
+            var members = usersInRole.ToList();
+            var nonMembers = allUsers.Except(members).ToList();
+
             return Ok(new RoleEdit
             {
                 Role = role,

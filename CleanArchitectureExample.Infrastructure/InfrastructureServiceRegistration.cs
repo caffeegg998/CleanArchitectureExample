@@ -24,14 +24,14 @@ namespace CleanArchitectureExample.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<IdentityDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("Authent_Connection")));
+            //services.AddDbContext<IdentityDbContext>(options =>
+            //    options.UseNpgsql(configuration.GetConnectionString("Authent_Connection")));
 
             //Authenconfig
             services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddDefaultUI()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthorization(options =>
             {
