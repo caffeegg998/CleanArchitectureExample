@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitectureExample.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250228081405_A")]
-    partial class A
+    [Migration("20250303042047_InitialDababase")]
+    partial class InitialDababase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,9 +109,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<int>("MarketId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("OrderStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PageId")
                         .HasColumnType("integer");
@@ -228,6 +227,10 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShippingPartnerId"));
 
                     b.Property<string>("PartnerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("text");
 

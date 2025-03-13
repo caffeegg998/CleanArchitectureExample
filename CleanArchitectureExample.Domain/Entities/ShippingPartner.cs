@@ -14,6 +14,7 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ShippingPartnerId { get; set; }
         public string PartnerName { get; set; }
-        
+        public string Region { get; set; }
+
     }
 }

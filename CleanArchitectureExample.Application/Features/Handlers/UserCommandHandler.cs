@@ -31,7 +31,7 @@ namespace CleanArchitectureExample.Application.Features.Handlers
                 UserId = request.userProfileDTO.UserId,
                 FullName = request.userProfileDTO.FullName,
                 DateOfBirth = request.userProfileDTO.DateOfBirth,
-                Department = request.userProfileDTO.Department,
+                DepartmentId = request.userProfileDTO.DepartmentId,
                 MaNhanVien = request.userProfileDTO.MaNhanVien,
                 MagnetCode = request.userProfileDTO.MagnetCode,
                 CreateAt = DateTime.Now.ToUniversalTime()

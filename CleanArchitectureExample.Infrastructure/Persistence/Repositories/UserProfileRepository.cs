@@ -24,7 +24,9 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
             return _identityDbContext.UserProfiles.ToList();
         }
 
-        public async Task<UserProfile?> GetUser(string userId) => await _identityDbContext.UserProfiles.FindAsync(userId);
+        public async Task<UserProfile?> GetUser(string userId) =>  await _identityDbContext.UserProfiles
+                                                                        .Include(up => up.Department)  // Eager load Department
+                                                                        .FirstOrDefaultAsync(up => up.UserId == userId);
 
         public async Task SaveUser(UserProfile userProfile) => await _identityDbContext.UserProfiles.AddAsync(userProfile);
 

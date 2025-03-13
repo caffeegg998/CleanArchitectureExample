@@ -28,6 +28,14 @@ namespace CleanArchitectureExample.API
 
 
             services.AddControllers();
+
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                //options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+                //options.JsonSerializerOptions.MaxDepth = 5; // Tùy chỉnh độ sâu tối đa
+            });
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -116,10 +124,6 @@ namespace CleanArchitectureExample.API
                 await RoleManager.CreateAsync(new IdentityRole("Admin"));
                 await RoleManager.CreateAsync(new IdentityRole("Manager"));
                 await RoleManager.CreateAsync(new IdentityRole("Staff"));
-                await RoleManager.CreateAsync(new IdentityRole("Board of Directors"));
-                await RoleManager.CreateAsync(new IdentityRole("Accountant"));
-                await RoleManager.CreateAsync(new IdentityRole("Marketing"));
-                await RoleManager.CreateAsync(new IdentityRole("Sale"));
                 await RoleManager.CreateAsync(new IdentityRole("Unknows"));
             }
 

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitectureExample.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class A : Migration
+    public partial class InitialDababase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,7 +86,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                 {
                     ShippingPartnerId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PartnerName = table.Column<string>(type: "text", nullable: false)
+                    PartnerName = table.Column<string>(type: "text", nullable: false),
+                    Region = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -311,7 +312,7 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     MarketId = table.Column<int>(type: "integer", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false),
                     ShippingPartnerId = table.Column<int>(type: "integer", nullable: false),
-                    OrderStatus = table.Column<string>(type: "text", nullable: false),
+                    OrderStatus = table.Column<int>(type: "integer", nullable: false),
                     TrackingNumber = table.Column<string>(type: "text", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },

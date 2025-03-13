@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using CleanArchitectureExample.Infrastructure.Persistence.Repositories.Interfaces;
 using CleanArchitectureExample.Domain.Interfaces;
+using CleanArchitectureExample.Domain.Interfaces.Repositorys;
 
 
 
@@ -87,6 +88,7 @@ namespace CleanArchitectureExample.Infrastructure
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IDepartmentRepositories, DepartmentRepositories>();
             services.AddScoped<IUserProfileRepository, UserProfileRepository>();
 
             return services;

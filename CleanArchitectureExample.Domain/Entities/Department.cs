@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace CleanArchitectureExample.Domain.Entities
 {
@@ -16,6 +17,8 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+
+        [JsonIgnore]
         public ICollection<UserProfile> UserProfiles { get; set; }
     }
 }

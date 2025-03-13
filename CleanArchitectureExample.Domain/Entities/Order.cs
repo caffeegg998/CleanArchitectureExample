@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CleanArchitectureExample.Domain.Enums;
 
 namespace CleanArchitectureExample.Domain.Entities
 {
@@ -24,7 +25,7 @@ namespace CleanArchitectureExample.Domain.Entities
         public Product Product { get; set; }
         public int ShippingPartnerId { get; set; }
         public ShippingPartner ShippingPartner { get; set; }
-        public string OrderStatus { get; set; }
+        public OrderStatusEnum OrderStatus { get; set; }
         public string TrackingNumber { get; set; }
         public DateTime CreateAt { get; set; }
     }

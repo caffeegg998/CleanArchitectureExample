@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CleanArchitectureExample.Domain.Interfaces;
+using CleanArchitectureExample.Domain.Interfaces.Repositorys;
 using CleanArchitectureExample.Infrastructure.Persistence.DbContexts;
 using CleanArchitectureExample.Infrastructure.Persistence.Repositories;
 
@@ -18,6 +19,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
         public IProductRepository ProductRepository { get; }
 
         public IUserProfileRepository UserProfileRepository { get; }
+        public IDepartmentRepositories DepartmentRepositories { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -25,6 +27,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
             //_identityDbContext = identityDbContext;
             ProductRepository = new ProductRepository(_context);
             UserProfileRepository = new UserProfileRepository(_context);
+            DepartmentRepositories = new DepartmentRepositories(_context);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();

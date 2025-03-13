@@ -106,9 +106,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<int>("MarketId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("OrderStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PageId")
                         .HasColumnType("integer");
@@ -225,6 +224,10 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShippingPartnerId"));
 
                     b.Property<string>("PartnerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("text");
 

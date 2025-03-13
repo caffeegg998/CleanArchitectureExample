@@ -123,7 +123,7 @@ namespace SparePartStockAPI.Controllers.Identity
                     UserId = user.Id,
                     FullName = model.FullName,
                     DateOfBirth = model.DateOfBirth,
-                    Department = model.Department,
+                    DepartmentId = model.Department,
                 };
 
                 CreateUserCommand createUserCommand = new CreateUserCommand();
