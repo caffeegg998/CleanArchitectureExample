@@ -40,7 +40,7 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             await _unitOfWork.ProductRepository.AddAsync(product);
             await _unitOfWork.CompleteAsync();
 
-            return product.Id;
+            return product.ProductId;
         }
 
         public async Task<bool> Handle(DeleteProductCommand request, CancellationToken cancellationToken)

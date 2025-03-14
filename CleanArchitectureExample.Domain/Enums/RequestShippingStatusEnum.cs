@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureExample.Domain.Enums
 {
-    public enum OrderStatusEnum
+    public enum RequestShippingStatusEnum
     {
         Pending, //Đơn hàng đang chờ xử lý.
         Processed, //Đơn hàng đã được xử lý, đang trong quá trình vận chuyển.

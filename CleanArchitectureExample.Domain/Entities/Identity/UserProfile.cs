@@ -19,6 +19,9 @@ namespace CleanArchitectureExample.Domain.Entities.Identity
         public string? MagnetCode { get; set; }
         public DateTime CreateAt { get; set; }
 
+        public int? ShippingPartnerId { get; set; }
+        public ShippingPartner? ShippingPartner { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; }
     }

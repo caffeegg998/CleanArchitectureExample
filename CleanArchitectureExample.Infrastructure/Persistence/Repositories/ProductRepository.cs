@@ -28,7 +28,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
 
         public async Task UpdateAsync(Product product)
         {
-            var existingProduct = await _context.Products.FindAsync(product.Id);
+            var existingProduct = await _context.Products.FindAsync(product.ProductId);
             if (existingProduct == null)
             {
                 throw new Exception("Product not found");

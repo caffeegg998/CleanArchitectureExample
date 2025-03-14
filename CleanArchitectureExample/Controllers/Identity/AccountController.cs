@@ -96,25 +96,23 @@ namespace SparePartStockAPI.Controllers.Identity
                 switch (model.detectUser)
                 {
                     case 1:
-                        role = "Board of Directors";
+                        role = "Admin";
                         break;
                     case 2:
-                        role = "Accountant";
+                        role = "Manager";
                         break;
                     case 3:
-                        role = "Marketing";
+                        role = "Staff";
                         break ;
                     default:
-                        role = "Sale";
+                        role = "Unknows";
                         break;
                 }
 
                 var result_role = await _userManager.AddToRoleAsync(user, role);
                 if (!result_role.Succeeded)
                     BadRequest(result_role);
-            }
-
-            
+            } 
 
             if (result.Succeeded)
             {

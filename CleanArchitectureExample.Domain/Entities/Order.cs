@@ -25,7 +25,7 @@ namespace CleanArchitectureExample.Domain.Entities
         public Product Product { get; set; }
         public int ShippingPartnerId { get; set; }
         public ShippingPartner ShippingPartner { get; set; }
-        public OrderStatusEnum OrderStatus { get; set; }
+        public RequestShippingStatusEnum OrderStatus { get; set; }
         public string TrackingNumber { get; set; }
         public DateTime CreateAt { get; set; }
     }
