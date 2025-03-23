@@ -130,15 +130,15 @@ namespace CleanArchitectureExample.API
                 await RoleManager.CreateAsync(new IdentityRole("Unknows"));
             }
 
-            IdentityUser? identityUser = await UserManager.FindByEmailAsync("pcb-pro87@local.canon-vn.com.vn");
+            IdentityUser? identityUser = await UserManager.FindByEmailAsync("caffegg998@gmail.com");
 
             if (identityUser != null)
             {
                 bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
                 if (adminRoleExists)
                 {
-                    IdentityUser userToMakeAdmin = await UserManager.FindByEmailAsync("pcb-pro87@local.canon-vn.com.vn");
-                    await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
+                    //IdentityUser userToMakeAdmin = await UserManager.FindByEmailAsync("pcb-pro87@local.canon-vn.com.vn");
+                    await UserManager.AddToRoleAsync(identityUser, "Admin");
                 }
             }
         }

@@ -69,7 +69,7 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             {
                 NgayChotDon = request.NgayChotDon,
                 UserProfileUserId = request.CreateBy,
-                RecipientId = recipientAdd.RecipientId, // Gán Id đã có
+                RecipientId = recipientAdd.RecipientId == 0 ? recipient[0].RecipientId : recipientAdd.RecipientId, // Gán Id đã có
                 ProductId = request.ProductId,
                 PageId = request.PageId,
                 Quantity = request.Quantity,

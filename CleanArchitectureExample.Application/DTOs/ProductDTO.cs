@@ -14,6 +14,13 @@ namespace CleanArchitectureExample.Application.DTOs
         public string Description { get; set; }
         public string CreateAt { get; set; }
         public double Price { get; set; }
-        public virtual List<MarketDTO> MarketDTOs { get; set; }
+        public virtual List<MarketSumaryDTO> MarketSumaryDTOs { get; set; }
     }
+    public class MarketSumaryDTO
+    {
+        public int MarketId { get; set; }
+        public string MarketName { get; set; }
+    }
+
+
 }

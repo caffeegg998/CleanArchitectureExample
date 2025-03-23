@@ -31,11 +31,11 @@ namespace CleanArchitectureExample.Application.MapperProfiles
 
             // Map Product -> ProductDto
             CreateMap<Product, ProductDTO>()
-                .ForMember(dest => dest.MarketDTOs, opt => opt.MapFrom(src => src.Markets));
+                .ForMember(dest => dest.MarketSumaryDTOs, opt => opt.MapFrom(src => src.Markets));
 
             // Map Market -> MarketDto
-            CreateMap<Market, MarketDTO>()
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products));
+            CreateMap<Market, MarketSumaryDTO>();
+               
 
             // Map Product -> ProductSummaryDto (Chỉ lấy ID và Name để tránh vòng lặp)
             CreateMap<Product, ProductSummaryDTO>();

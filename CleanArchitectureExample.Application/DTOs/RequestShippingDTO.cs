@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureExample.Application.DTOs
 {
-    public class ProductSummaryDTO
+    public class RequestShippingDTO
     {
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
     }
 }
