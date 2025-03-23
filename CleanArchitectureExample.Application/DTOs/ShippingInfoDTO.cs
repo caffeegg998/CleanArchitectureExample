@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureExample.Application.DTOs
 {
-    internal class ShippingInfo
+    public class ShippingInfoDTO
     {
     }
 }
