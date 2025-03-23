@@ -63,9 +63,14 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<string>("MagnetCode")
                         .HasColumnType("text");
 
+                    b.Property<int?>("ShippingPartnerId")
+                        .HasColumnType("integer");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("ShippingPartnerId");
 
                     b.ToTable("UserProfiles");
                 });
@@ -82,63 +87,9 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ShippingPartnerId")
-                        .HasColumnType("integer");
-
                     b.HasKey("MarketId");
 
-                    b.HasIndex("ShippingPartnerId");
-
                     b.ToTable("Markets");
-                });
-
-            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Order", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("MarketId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PageId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SaleUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ShippingPartnerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("TrackingNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("MarketId");
-
-                    b.HasIndex("PageId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("SaleUserId");
-
-                    b.HasIndex("ShippingPartnerId");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Page", b =>
@@ -189,11 +140,11 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProductId"));
 
                     b.Property<string>("CreateAt")
                         .IsRequired()
@@ -203,16 +154,134 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Recipient", b =>
+                {
+                    b.Property<int>("RecipientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RecipientId"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("RecipientId");
+
+                    b.ToTable("Recipients");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.RequestShipping", b =>
+                {
+                    b.Property<int>("RequestShippingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RequestShippingId"));
+
+                    b.Property<DateTime>("NgayChotDon")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("NgayDoiSoat")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ShippingInfoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("UserProfileUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("RequestShippingId");
+
+                    b.HasIndex("PageId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("ShippingInfoId");
+
+                    b.HasIndex("UserProfileUserId");
+
+                    b.ToTable("RequestShippings");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ShippingInfo", b =>
+                {
+                    b.Property<int>("ShippingInfoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShippingInfoId"));
+
+                    b.Property<string>("DateSend")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SendMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ShippingPartnerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TimeReceived")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("text");
+
+                    b.HasKey("ShippingInfoId");
+
+                    b.HasIndex("ShippingPartnerId");
+
+                    b.ToTable("ShippingInfos");
                 });
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ShippingPartner", b =>
@@ -222,6 +291,9 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShippingPartnerId"));
+
+                    b.Property<int>("MarketId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PartnerName")
                         .IsRequired()
@@ -233,6 +305,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
 
                     b.HasKey("ShippingPartnerId");
 
+                    b.HasIndex("MarketId");
+
                     b.ToTable("ShippingPartners");
                 });
 
@@ -241,12 +315,12 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<int>("MarketsMarketId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int>("ProductsProductId")
                         .HasColumnType("integer");
 
-                    b.HasKey("MarketsMarketId", "ProductsId");
+                    b.HasKey("MarketsMarketId", "ProductsProductId");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductsProductId");
 
                     b.ToTable("MarketProduct");
                 });
@@ -455,6 +529,10 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingPartner", "ShippingPartner")
+                        .WithMany()
+                        .HasForeignKey("ShippingPartnerId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithOne()
                         .HasForeignKey("CleanArchitectureExample.Domain.Entities.Identity.UserProfile", "UserId")
@@ -463,61 +541,9 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
 
                     b.Navigation("Department");
 
+                    b.Navigation("ShippingPartner");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Market", b =>
-                {
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingPartner", "ShippingPartner")
-                        .WithMany()
-                        .HasForeignKey("ShippingPartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ShippingPartner");
-                });
-
-            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Order", b =>
-                {
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.Market", "Market")
-                        .WithMany()
-                        .HasForeignKey("MarketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.Page", "Page")
-                        .WithMany()
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.Identity.UserProfile", "SaleUser")
-                        .WithMany()
-                        .HasForeignKey("SaleUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingPartner", "ShippingPartner")
-                        .WithMany()
-                        .HasForeignKey("ShippingPartnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Market");
-
-                    b.Navigation("Page");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("SaleUser");
-
-                    b.Navigation("ShippingPartner");
                 });
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Page", b =>
@@ -558,6 +584,69 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.RequestShipping", b =>
+                {
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Page", "Page")
+                        .WithMany()
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Recipient", "Recipient")
+                        .WithMany()
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingInfo", "ShippingInfo")
+                        .WithMany()
+                        .HasForeignKey("ShippingInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Identity.UserProfile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Page");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Recipient");
+
+                    b.Navigation("ShippingInfo");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ShippingInfo", b =>
+                {
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingPartner", "ShippingPartner")
+                        .WithMany()
+                        .HasForeignKey("ShippingPartnerId");
+
+                    b.Navigation("ShippingPartner");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ShippingPartner", b =>
+                {
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Market", "Market")
+                        .WithMany()
+                        .HasForeignKey("MarketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Market");
+                });
+
             modelBuilder.Entity("MarketProduct", b =>
                 {
                     b.HasOne("CleanArchitectureExample.Domain.Entities.Market", null)
@@ -568,7 +657,7 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
 
                     b.HasOne("CleanArchitectureExample.Domain.Entities.Product", null)
                         .WithMany()
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("ProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -21,6 +21,14 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
         public IUserProfileRepository UserProfileRepository { get; }
         public IDepartmentRepositories DepartmentRepositories { get; }
 
+        public IMarketRepositories MarketRepositories { get; }
+
+        public IRecipientRepository RecipientRepository { get; }
+
+        public IShippingInfoRepository ShippingInfoRepository { get; }
+
+        public IRequestShippingRepositories RequestShippingRepositories { get; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -28,6 +36,10 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
             ProductRepository = new ProductRepository(_context);
             UserProfileRepository = new UserProfileRepository(_context);
             DepartmentRepositories = new DepartmentRepositories(_context);
+            MarketRepositories = new MarketRepositories(_context);
+            RecipientRepository = new RecipientRepository(_context);
+            ShippingInfoRepository = new ShippingInfoRepository(_context);
+            RequestShippingRepositories = new RequestShippingRepositories(_context);
         }
 
         public async Task<int> CompleteAsync() => await _context.SaveChangesAsync();

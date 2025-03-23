@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CleanArchitectureExample.Application.DTOs;
 using CleanArchitectureExample.Application.DTOs.Account;
+using CleanArchitectureExample.Domain.Entities;
 using CleanArchitectureExample.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,18 @@ namespace CleanArchitectureExample.Application.MapperProfiles
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 
                 .ForMember(dest => dest.Department, opt => opt.MapFrom(src => src.Department.DepartmentName));
+
+
+            // Map Product -> ProductDto
+            CreateMap<Product, ProductDTO>()
+                .ForMember(dest => dest.MarketDTOs, opt => opt.MapFrom(src => src.Markets));
+
+            // Map Market -> MarketDto
+            CreateMap<Market, MarketDTO>()
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products));
+
+            // Map Product -> ProductSummaryDto (Chỉ lấy ID và Name để tránh vòng lặp)
+            CreateMap<Product, ProductSummaryDTO>();
         }
     }
 }

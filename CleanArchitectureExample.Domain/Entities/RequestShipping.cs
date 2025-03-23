@@ -15,10 +15,12 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RequestShippingId { get; set; }
         public DateTime NgayChotDon { get; set; }
-        public string CreateBy { get; set; }
+        public string UserProfileUserId { get; set; }
         public UserProfile UserProfile { get; set; }
         public int RecipientId { get; set; }
         public Recipient Recipient { get; set; }
+        public int PageId { get; set; }
+        public Page Page { get; set; }
         public int ProductId { get; set; }
         public Product Product{ get; set; }
         public int Quantity { get; set; }

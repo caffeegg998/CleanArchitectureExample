@@ -15,6 +15,8 @@ namespace CleanArchitectureExample.Domain.Entities
         public int ShippingPartnerId { get; set; }
         public string PartnerName { get; set; }
         public string Region { get; set; }
+        public int MarketId { get; set; }
+        public Market Market { get; set; }
 
     }
 }

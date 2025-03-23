@@ -15,12 +15,12 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ShippingInfoId { get; set; }
         public string SendMethod { get; set; }
-        public string TimeReceived { get; set; }
-        public string Note { get; set; }
-        public DateTime DateSend { get; set; }
-        public string TrackingNumber { get; set; }
-        public RequestShippingStatusEnum Status { get; set; }
-        public int ShippingPartnerId { get; set; }
+        public string? TimeReceived { get; set; }
+        public string? Note { get; set; }
+        public string DateSend { get; set; }
+        public string? TrackingNumber { get; set; }
+        public RequestShippingStatusEnum Status { get; set; } = RequestShippingStatusEnum.Pending;
+        public int? ShippingPartnerId { get; set; }
         public ShippingPartner ShippingPartner { get; set; }
     }
 }

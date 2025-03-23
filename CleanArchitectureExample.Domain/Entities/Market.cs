@@ -18,8 +18,8 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MarketId { get; set; }
         public string MarketName { get; set; }
-        public int ShippingPartnerId { get; set; }
-        public ShippingPartner ShippingPartner { get; set; }
+
         public virtual ICollection<Product> Products { get; set; }
+
     }
 }

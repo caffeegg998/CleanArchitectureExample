@@ -20,7 +20,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Product?> GetByIdAsync(Guid id) => await _context.Products.FindAsync(id);
+        public async Task<Product?> GetByIdAsync(int id) => await _context.Products.Include(r => r.Markets).FirstOrDefaultAsync(c => c.ProductId == id);
 
         public async Task<IEnumerable<Product>> GetAllAsync() => await _context.Products.ToListAsync();
 

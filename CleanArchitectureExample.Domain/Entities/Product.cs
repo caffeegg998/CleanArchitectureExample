@@ -20,7 +20,7 @@ namespace CleanArchitectureExample.Domain.Entities
         public string ProductName { get; set; }
         public string Description { get; set; }
         public string CreateAt { get; set; }
-        public decimal Price { get; set; }
-        public virtual ICollection<Market> Markets { get; set; }
+        public double Price { get; set; }
+        public virtual List<Market> Markets { get; set; }
     }
 }

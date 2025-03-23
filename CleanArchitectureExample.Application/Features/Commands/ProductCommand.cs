@@ -11,23 +11,25 @@ namespace CleanArchitectureExample.Application.Features.Commands
     {
         public class UpdateProductCommand : IRequest<bool>
         {
-            public Guid Id { get; set; }
+            public int Id { get; set; }
             public string Name { get; set; }
-            public decimal Price { get; set; }
+            public double Price { get; set; }
         }
         public class CreateProductCommand : IRequest<int>
         {
             public string Name { get; set; } = string.Empty;
-            public decimal Price { get; set; }
+            public string Description { get; set; } = string.Empty;
+            public double Price { get; set; }
+            public List<int> MarketIds { get; set; } = new List<int>(); // Danh sách Market liên kết
         }
         public class DeleteProductCommand : IRequest<bool>
         {
-            public DeleteProductCommand(Guid id)
+            public DeleteProductCommand(int id)
             {
                 Id = id;
             }
 
-            public Guid Id { get; set; }
+            public int Id { get; set; }
         }
     }
 }

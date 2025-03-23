@@ -1,4 +1,6 @@
-﻿using CleanArchitectureExample.Application.Features.Queries;
+﻿using AutoMapper;
+using CleanArchitectureExample.Application.DTOs;
+using CleanArchitectureExample.Application.Features.Queries;
 using CleanArchitectureExample.Domain.Entities;
 using CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork;
 using MediatR;
@@ -12,30 +14,47 @@ using static CleanArchitectureExample.Application.Features.Commands.ProductComma
 namespace CleanArchitectureExample.Application.Features.Handlers
 {
     public class ProductCommandHandler :
-        IRequestHandler<GetProductByIdQuery, Product?>,
+        IRequestHandler<GetProductByIdQuery, ProductDTO?>,
         IRequestHandler<CreateProductCommand, int>,
         IRequestHandler<DeleteProductCommand, bool>,
         IRequestHandler<UpdateProductCommand, bool>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ProductCommandHandler(IUnitOfWork unitOfWork)
+        public ProductCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public async Task<Product?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ProductDTO?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
+            Product product = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
+
+            var productDto = _mapper.Map<ProductDTO>(product);
+
+            return productDto;
         }
 
         public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {
-                
                 ProductName = request.Name,
-                Price = request.Price
+                Description = request.Description,
+                CreateAt = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), // Format chuẩn
+                Price = request.Price,
+                Markets = new List<Market>() // Khởi tạo danh sách Market
             };
+
+            // Nếu request có danh sách MarketIds, thêm vào Product
+            if (request.MarketIds != null && request.MarketIds.Any())
+            {
+                var markets = await _unitOfWork.MarketRepositories
+                    .GetByConditionAsync(m => request.MarketIds.Contains(m.MarketId));
+
+                product.Markets.AddRange(markets);
+            }
 
             await _unitOfWork.ProductRepository.AddAsync(product);
             await _unitOfWork.CompleteAsync();

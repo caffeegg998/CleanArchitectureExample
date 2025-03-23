@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Data;
+using System.Text.Json.Serialization;
 using static CleanArchitectureExample.Application.Features.Commands.ProductCommand;
 
 namespace CleanArchitectureExample.API
@@ -31,9 +32,11 @@ namespace CleanArchitectureExample.API
 
             services.AddControllers().AddJsonOptions(options =>
             {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 //options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
                 //options.JsonSerializerOptions.MaxDepth = 5; // Tùy chỉnh độ sâu tối đa
             });
+            
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

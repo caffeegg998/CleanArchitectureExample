@@ -1,4 +1,5 @@
-﻿using CleanArchitectureExample.Application.Features.Commands;
+﻿using CleanArchitectureExample.Application.DTOs;
+using CleanArchitectureExample.Application.Features.Commands;
 using CleanArchitectureExample.Application.Features.Queries;
 using CleanArchitectureExample.Domain.Entities;
 using MediatR;
@@ -26,16 +27,16 @@ namespace CleanArchitectureExample.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductById(Guid id)
+        public async Task<IActionResult> GetProductById(int id)
         {
-            Product product = await _mediator.Send(new GetProductByIdQuery(id));
+            ProductDTO product = await _mediator.Send(new GetProductByIdQuery(id));
             return product is not null ? Ok(product) : NotFound();
         }
 
 
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] UpdateProductCommand command)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductCommand command)
         {
             if (id != command.Id)
             {
@@ -53,7 +54,7 @@ namespace CleanArchitectureExample.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(Guid id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var result = await _mediator.Send(new DeleteProductCommand(id));
 

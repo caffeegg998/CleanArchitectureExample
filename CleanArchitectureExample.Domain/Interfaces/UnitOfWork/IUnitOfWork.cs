@@ -13,7 +13,11 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork
     {
         IProductRepository ProductRepository { get; }
         IUserProfileRepository UserProfileRepository { get; }
+        IMarketRepositories MarketRepositories { get; }
         IDepartmentRepositories DepartmentRepositories { get; }
+        IRecipientRepository RecipientRepository { get; }
+        IRequestShippingRepositories RequestShippingRepositories { get; }
+        IShippingInfoRepository ShippingInfoRepository { get; }
         Task<int> CompleteAsync();
         Task<int> CompleteIdentityAsync();
     }

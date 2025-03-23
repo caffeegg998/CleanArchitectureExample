@@ -21,9 +21,15 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.DbContexts
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageSale> PageSales { get; set; }
         public DbSet<ShippingPartner> ShippingPartners { get; set; }
-        public DbSet<Order> Orders { get; set; }
+
 
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<ShippingInfo> ShippingInfos { get; set; }
+        public DbSet<Recipient> Recipients { get; set; }
+        public DbSet<RequestShipping> RequestShippings { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Cấu hình quan hệ N-N giữa Page và User (Sale)
@@ -50,17 +56,17 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.DbContexts
             base.OnModelCreating(modelBuilder);
 
             //Ràng buộc của Order
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Market)
-                .WithMany()
-                .HasForeignKey(o => o.MarketId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Market)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.MarketId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Product)
-                .WithMany()
-                .HasForeignKey(o => o.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Product)
+            //    .WithMany()
+            //    .HasForeignKey(o => o.ProductId)
+            //    .OnDelete(DeleteBehavior.Cascade);
 
             //modelBuilder.Entity<Order>()
             //    .HasOne(o => o.ShippingPartner)
@@ -68,10 +74,10 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.DbContexts
             //    .HasForeignKey(o => new {o.MarketId,o.ShippingPartnerId})
             //    .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Order>()
-                   .HasOne(o => o.ShippingPartner)
-                   .WithMany()
-                   .HasForeignKey(o => o.ShippingPartnerId);
+            //modelBuilder.Entity<Order>()
+            //       .HasOne(o => o.ShippingPartner)
+            //       .WithMany()
+            //       .HasForeignKey(o => o.ShippingPartnerId);
 
             //modelBuilder.Entity<Page>()
             //    .HasOne<Product>()
