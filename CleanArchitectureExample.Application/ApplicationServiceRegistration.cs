@@ -14,7 +14,6 @@ namespace CleanArchitectureExample.Application
         {
             // Đăng ký AutoMapper và chỉ định assembly chứa các Profile
             services.AddAutoMapper(typeof(ApplicationServiceRegistration).Assembly);
-
             // Đăng ký các dịch vụ khác của Application (nếu có)
             // services.AddScoped<IMyService, MyService>();
 

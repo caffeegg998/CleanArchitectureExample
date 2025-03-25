@@ -39,6 +39,8 @@ namespace CleanArchitectureExample.Application.MapperProfiles
 
             // Map Product -> ProductSummaryDto (Chỉ lấy ID và Name để tránh vòng lặp)
             CreateMap<Product, ProductSummaryDTO>();
+
+            CreateMap<UserProfile, UserProfileDTO_Min>();
         }
     }
 }

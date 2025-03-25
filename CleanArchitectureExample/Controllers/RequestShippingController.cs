@@ -1,4 +1,5 @@
-﻿using CleanArchitectureExample.Application.Features.Commands;
+﻿using System.Security.Claims;
+using CleanArchitectureExample.Application.Features.Commands;
 using CleanArchitectureExample.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,48 @@ namespace CleanArchitectureExample.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRequestShipping([FromBody] CreateRequestShippingCommand command)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Không thể xác định người dùng hiện tại.");
+            }
+
+            command.CreatedBy = userId;
+
+            if (command == null)
+            {
+                return BadRequest("Dữ liệu yêu cầu không hợp lệ.");
+            }
+
+            try
+            {
+                var requestShipping = await _mediator.Send(command);
+
+                if (requestShipping == null)
+                {
+                    return BadRequest("Không thể tạo yêu cầu vận chuyển.");
+                }
+
+                return Ok(requestShipping); // Trả về đối tượng RequestShipping đã tạo
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi hệ thống: {ex.Message}");
+            }
+
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateRequestShipping([FromBody] UpdateRequestShippingCommand command)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("Không thể xác định người dùng hiện tại.");
+            }
+
+            //command.CreatedBy = userId;
+
             if (command == null)
             {
                 return BadRequest("Dữ liệu yêu cầu không hợp lệ.");

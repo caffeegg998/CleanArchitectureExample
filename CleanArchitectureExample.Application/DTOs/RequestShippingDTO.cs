@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CleanArchitectureExample.Domain.Entities.Identity;
 using CleanArchitectureExample.Domain.Entities;
 using CleanArchitectureExample.Application.DTOs.Account;
+using CleanArchitectureExample.Domain.Enums;
 
 namespace CleanArchitectureExample.Application.DTOs
 {
@@ -13,15 +14,15 @@ namespace CleanArchitectureExample.Application.DTOs
     {
         public int RequestShippingId { get; set; }
         public DateTime NgayChotDon { get; set; }
-        public UserProfileDTO UserProfile { get; set; }
+        public UserProfileDTO_Min NguoiTao { get; set; }
         public Recipient Recipient { get; set; }
-        public Page Page { get; set; }
-        public ProductSummaryDTO Product { get; set; }
+        public PageDTO Page { get; set; }
+        public ProductSummaryDTO ProductDTO { get; set; }
         public int Quantity { get; set; }
         public double TotalPrice { get; set; }
-        public ShippingInfoDTO ShippingInfo { get; set; }
+        public ShippingInfoDTO ShippingInfoDTO { get; set; }
 
-        public string Status { get; set; }
+        public RequestShippingStatusEnum Status { get; set; }
         public DateTime NgayDoiSoat { get; set; }
     }
 }

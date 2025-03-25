@@ -1,5 +1,7 @@
 ﻿using CleanArchitectureExample.Domain.Entities;
+using CleanArchitectureExample.Domain.Enums;
 using CleanArchitectureExample.Domain.Interfaces.Repositorys;
+using CleanArchitectureExample.Domain.Utils;
 using CleanArchitectureExample.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,19 +48,34 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.Repositories
             .FirstOrDefaultAsync(r => r.RequestShippingId == id);
         }
 
-        public async Task<IEnumerable<RequestShipping>> GetByMarketIdAsync(int marketId)
+        public async Task<List<RequestShipping>> GetByMarketIdAsync(int marketId)
         {
             return await _context.RequestShippings
-            .Include(rs => rs.ShippingInfo)          // Load ShippingInfo
-            .ThenInclude(si => si.ShippingPartner)   // Load ShippingPartner
-            .ThenInclude(sp => sp.Market)           // Load Market
-            .Where(rs => rs.ShippingInfo.ShippingPartner.MarketId == marketId)
-            .ToListAsync();
+                .Include(rs => rs.Product)
+                .Include(rs => rs.Recipient)
+                .Include(rs => rs.Page)
+                .Include(rs => rs.UserProfile)
+                .Include(rs => rs.ShippingInfo)          // Load ShippingInfo
+                .ThenInclude(si => si.ShippingPartner)   // Load ShippingPartner
+                .ThenInclude(sp => sp.Market)           // Load Market
+                .Where(rs => rs.ShippingInfo.ShippingPartner.MarketId == marketId)
+                .ToListAsync();
         }
 
-        public async Task UpdateAsync(RequestShipping requestShipping)
+        public async Task<RequestShipping> UpdateAsync(RequestShipping requestShipping)
         {
+            requestShipping.Status = RequestShippingStatusEnum.Processed;
+            ShippingInfo shippingInfo = await _context.ShippingInfos.FindAsync(requestShipping.ShippingInfoId);
+            if(shippingInfo != null)
+            {
+                shippingInfo.DateSend = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+                shippingInfo.Status = RequestShippingStatusEnum.Processed;
+                shippingInfo.TrackingNumber = ShippingInfoGenerator.GenerateTrackingNumber();
+
+                _context.ShippingInfos.Update(shippingInfo);
+            }
             _context.RequestShippings.Update(requestShipping);
+            return requestShipping;
         }
     }
 }

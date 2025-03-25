@@ -15,6 +15,7 @@ namespace CleanArchitectureExample.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PageId { get; set; }
         public string PageName { get; set; }
+        public string PageLink { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
         public string CreateBy { get; set; }

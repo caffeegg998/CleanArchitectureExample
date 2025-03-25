@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using CleanArchitectureExample.Application.DTOs;
 using CleanArchitectureExample.Domain.Entities;
+using CleanArchitectureExample.Domain.Enums;
 using CleanArchitectureExample.Domain.Interfaces.Repositorys;
 using CleanArchitectureExample.Infrastructure.Persistence.UnitOfWork;
 using MediatR;
@@ -14,16 +16,19 @@ using static CleanArchitectureExample.Application.Features.Queries.RequestShippi
 namespace CleanArchitectureExample.Application.Features.Handlers
 {
     public class RequestShippingHandler : 
-        IRequestHandler<CreateRequestShippingCommand, RequestShipping>,
+        IRequestHandler<CreateRequestShippingCommand, RequestShippingDTO>,
         IRequestHandler<GetListRequestShipping, List<RequestShipping>>,
-        IRequestHandler<GetRequestShippingByMarketQuery, IEnumerable<RequestShipping>>
+        IRequestHandler<GetRequestShippingByMarketQuery, TotalRequestShippingByMarketDTO>,
+        IRequestHandler<UpdateRequestShippingCommand ,RequestShippingDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
-        public RequestShippingHandler(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public RequestShippingHandler(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public async Task<RequestShipping?> Handle(CreateRequestShippingCommand request, CancellationToken cancellationToken)
+        public async Task<RequestShippingDTO?> Handle(CreateRequestShippingCommand request, CancellationToken cancellationToken)
         {
             // 1. Kiểm tra Recipient có tồn tại không
             List<Recipient> recipient = await _unitOfWork.RecipientRepository.GetByConditionAsync(r =>
@@ -68,13 +73,13 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             RequestShipping requestShipping = new RequestShipping
             {
                 NgayChotDon = request.NgayChotDon,
-                UserProfileUserId = request.CreateBy,
+                UserProfileUserId = request.CreatedBy,
                 RecipientId = recipientAdd.RecipientId == 0 ? recipient[0].RecipientId : recipientAdd.RecipientId, // Gán Id đã có
                 ProductId = request.ProductId,
                 PageId = request.PageId,
                 Quantity = request.Quantity,
                 TotalPrice = totalPrice, // Tính tự động
-                Status = "Pending",
+                Status = RequestShippingStatusEnum.Pending,
                 NgayDoiSoat = DateTime.UtcNow,
                 ShippingInfoId = shippingInfo.ShippingInfoId
             };
@@ -83,12 +88,13 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             await _unitOfWork.CompleteAsync(); // Phải lưu để có RequestShippingId
 
             // 5. Tạo ShippingInfo (chưa có ShippingInfoId)
-           
+
 
             // 6. Gán ShippingInfoId vào RequestShipping và cập nhật
-            
 
-            return requestShipping;
+            RequestShippingDTO requestShippingDTO = _mapper.Map<RequestShippingDTO>(requestShipping);
+
+            return requestShippingDTO;
         }
 
         public async Task<List<RequestShipping>> Handle(GetListRequestShipping request, CancellationToken cancellationToken)
@@ -96,9 +102,58 @@ namespace CleanArchitectureExample.Application.Features.Handlers
             return await _unitOfWork.RequestShippingRepositories.GetAllAsync();
         }
 
-        public async Task<IEnumerable<RequestShipping>> Handle(GetRequestShippingByMarketQuery request, CancellationToken cancellationToken)
+        public async Task<TotalRequestShippingByMarketDTO> Handle(GetRequestShippingByMarketQuery request, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.RequestShippingRepositories.GetByMarketIdAsync(request.MarketId);
+            TotalRequestShippingByMarketDTO totalRequestShippingByMarketDTO = new TotalRequestShippingByMarketDTO();
+            Market market = await _unitOfWork.MarketRepositories.GetByIdAsync(request.MarketId);
+
+            if (market == null)
+            {
+                // Xử lý trường hợp không tìm thấy market
+                throw new Exception("Market not found");
+            }
+
+            // Lấy giá trị MarketName từ đối tượng market
+            string marketName = market.MarketName;
+            totalRequestShippingByMarketDTO.MarketName = marketName;
+
+            List<RequestShipping> requestShippings = await _unitOfWork.RequestShippingRepositories.GetByMarketIdAsync(request.MarketId);
+            if(requestShippings.Count > 0)
+            {
+                List<RequestShippingDTO> productDto = _mapper.Map<List<RequestShippingDTO>>(requestShippings);
+                totalRequestShippingByMarketDTO.TotalRequest = productDto.Count;
+                totalRequestShippingByMarketDTO.ListRequestShipping = productDto;
+
+                TotalRequestStatus totalRequestStatus = new TotalRequestStatus();
+                totalRequestStatus.Pending = productDto.Count(x => x.Status == RequestShippingStatusEnum.Pending);
+                totalRequestStatus.Processed = productDto.Count(x => x.Status == RequestShippingStatusEnum.Processed);
+                totalRequestStatus.Shipped = productDto.Count(x => x.Status == RequestShippingStatusEnum.Shipped);
+                totalRequestStatus.Delivered = productDto.Count(x => x.Status == RequestShippingStatusEnum.Delivered);
+                totalRequestStatus.Cancelled = productDto.Count(x => x.Status == RequestShippingStatusEnum.Cancelled);
+                totalRequestStatus.Returned = productDto.Count(x => x.Status == RequestShippingStatusEnum.Returned);
+                totalRequestShippingByMarketDTO.TotalRequestStatus = totalRequestStatus;
+
+            }
+
+            return totalRequestShippingByMarketDTO;
+        }
+
+        public async Task<RequestShippingDTO> Handle(UpdateRequestShippingCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                RequestShipping requestShipping = _mapper.Map<RequestShipping>(request.requestShippingDTO);
+                RequestShipping requestShippingD = await _unitOfWork.RequestShippingRepositories.UpdateAsync(requestShipping);
+                RequestShippingDTO requestShippingDTO = new RequestShippingDTO(); ;
+                if (requestShippingD != null) {
+                    requestShippingDTO = _mapper.Map<RequestShippingDTO>(requestShippingD);
+                }
+                await _unitOfWork.CompleteAsync();
+                return requestShippingDTO;
+            }
+            catch (Exception ex) { 
+                return new RequestShippingDTO();
+            }
         }
     }
 }

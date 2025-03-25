@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitectureExample.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250323110618_ONhaChiHong")]
-    partial class ONhaChiHong
+    [Migration("20250325095038_ModifyAction")]
+    partial class ModifyAction
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionBy", b =>
+                {
+                    b.Property<int>("ActionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ActionId"));
+
+                    b.Property<int>("ActionName")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ShippingInfoId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserProfileUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("ActionId");
+
+                    b.HasIndex("ShippingInfoId");
+
+                    b.HasIndex("UserProfileUserId");
+
+                    b.ToTable("ActionBy");
+                });
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Department", b =>
                 {
@@ -107,6 +137,10 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreateBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PageLink")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -223,9 +257,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<int>("ShippingInfoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("double precision");
@@ -524,6 +557,25 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionBy", b =>
+                {
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingInfo", "ShippingInfo")
+                        .WithMany("actionBies")
+                        .HasForeignKey("ShippingInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CleanArchitectureExample.Domain.Entities.Identity.UserProfile", "UserAction")
+                        .WithMany()
+                        .HasForeignKey("UserProfileUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShippingInfo");
+
+                    b.Navigation("UserAction");
+                });
+
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Identity.UserProfile", b =>
                 {
                     b.HasOne("CleanArchitectureExample.Domain.Entities.Department", "Department")
@@ -724,6 +776,11 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Page", b =>
                 {
                     b.Navigation("PageSales");
+                });
+
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ShippingInfo", b =>
+                {
+                    b.Navigation("actionBies");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,7 +27,7 @@ namespace CleanArchitectureExample.API
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly));
 
-
+            services.AddHttpContextAccessor();
             services.AddControllers();
 
             services.AddControllers().AddJsonOptions(options =>

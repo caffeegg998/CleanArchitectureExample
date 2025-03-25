@@ -1,4 +1,5 @@
-﻿using CleanArchitectureExample.Domain.Entities;
+﻿using CleanArchitectureExample.Application.DTOs;
+using CleanArchitectureExample.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace CleanArchitectureExample.Application.Features.Queries
                 
             }
         }
-        public class GetRequestShippingByMarketQuery : IRequest<IEnumerable<RequestShipping>>
+        public class GetRequestShippingByMarketQuery : IRequest<TotalRequestShippingByMarketDTO>
         {
             public int MarketId { get; set; }
 

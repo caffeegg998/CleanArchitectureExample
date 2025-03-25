@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitectureExample.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250320155110_RemoveOrderEntity2")]
-    partial class RemoveOrderEntity2
+    [Migration("20250325074819_ModifyStatus")]
+    partial class ModifyStatus
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,6 +107,10 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreateBy")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PageLink")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -223,9 +227,8 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.Property<int>("ShippingInfoId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<double>("TotalPrice")
                         .HasColumnType("double precision");

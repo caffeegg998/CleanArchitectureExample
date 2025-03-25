@@ -12,10 +12,10 @@ namespace CleanArchitectureExample.Domain.Interfaces.Repositorys
         Task<RequestShipping?> GetByIdAsync(int id);
         Task<List<RequestShipping>> GetAllAsync();
         Task AddAsync(RequestShipping requestShipping);
-        Task UpdateAsync(RequestShipping requestShipping);
+        Task<RequestShipping> UpdateAsync(RequestShipping requestShipping);
 
         Task DeleteAsync(RequestShipping requestShipping);
 
-        Task<IEnumerable<RequestShipping>> GetByMarketIdAsync(int marketId);
+        Task<List<RequestShipping>> GetByMarketIdAsync(int marketId);
     }
 }
