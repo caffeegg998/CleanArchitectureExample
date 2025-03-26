@@ -1,5 +1,6 @@
 ﻿using CleanArchitectureExample.Application;
 using CleanArchitectureExample.Infrastructure;
+using CleanArchitectureExample.Infrastructure.Persistence.SeedData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,6 +25,8 @@ namespace CleanArchitectureExample.API
             //Add Infrastructure
             services.AddInfrastructureServices(Configuration);
             services.AddApplication();
+
+
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly));
 
@@ -89,6 +92,8 @@ namespace CleanArchitectureExample.API
                 // The default HSTS value is 30 days. You may want to change this for production.
                 app.UseHsts();
             }
+
+            SeedData.Initialize(services);
 
             //app.UseHttpsRedirection();
 

@@ -21,20 +21,9 @@ namespace CleanArchitectureExample.Domain.Entities
         public string DateSend { get; set; }
         public string? TrackingNumber { get; set; }
         public RequestShippingStatusEnum Status { get; set; } = RequestShippingStatusEnum.Pending;
-        public List<ActionBy> actionBies { get; set; }
+        public List<ActionHistory> actionBies { get; set; }
         public int? ShippingPartnerId { get; set; }
         public ShippingPartner ShippingPartner { get; set; }
     }
-    public class ActionBy
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ActionId { get; set; }
-        public ActionEnum ActionName { get; set; }
-        public string UserProfileUserId { get; set; }
-        public UserProfile UserAction { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public int ShippingInfoId { get; set; }
-        public ShippingInfo ShippingInfo { get; set; }
-    }
+    
 }

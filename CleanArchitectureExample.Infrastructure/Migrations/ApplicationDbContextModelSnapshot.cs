@@ -22,19 +22,22 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionBy", b =>
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionHistory", b =>
                 {
-                    b.Property<int>("ActionId")
+                    b.Property<int>("ActionHistoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ActionId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ActionHistoryId"));
 
                     b.Property<int>("ActionName")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
 
                     b.Property<int>("ShippingInfoId")
                         .HasColumnType("integer");
@@ -43,13 +46,13 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("ActionId");
+                    b.HasKey("ActionHistoryId");
 
                     b.HasIndex("ShippingInfoId");
 
                     b.HasIndex("UserProfileUserId");
 
-                    b.ToTable("ActionBy");
+                    b.ToTable("ActionHistories");
                 });
 
             modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.Department", b =>
@@ -554,7 +557,7 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionBy", b =>
+            modelBuilder.Entity("CleanArchitectureExample.Domain.Entities.ActionHistory", b =>
                 {
                     b.HasOne("CleanArchitectureExample.Domain.Entities.ShippingInfo", "ShippingInfo")
                         .WithMany("actionBies")

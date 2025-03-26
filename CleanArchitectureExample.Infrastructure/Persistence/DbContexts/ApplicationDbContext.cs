@@ -22,7 +22,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.DbContexts
         public DbSet<PageSale> PageSales { get; set; }
         public DbSet<ShippingPartner> ShippingPartners { get; set; }
 
-
+        public DbSet<ActionHistory> ActionHistories { get; set; }
         public DbSet<Department> Departments { get; set; }
 
         public DbSet<ShippingInfo> ShippingInfos { get; set; }
