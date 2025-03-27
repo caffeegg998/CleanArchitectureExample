@@ -1,5 +1,6 @@
 ﻿using CleanArchitectureExample.Domain.Entities;
 using CleanArchitectureExample.Domain.Entities.Identity;
+using CleanArchitectureExample.Domain.Enums;
 using CleanArchitectureExample.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -51,6 +52,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.SeedData
                             .ToList();
 
                     product.Markets.AddRange(listMarket);
+                    context.Products.Add(product);
 
                     context.SaveChanges();
                 }
@@ -79,13 +81,31 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.SeedData
                     context.SaveChanges();
                 }
 
+                if (!context.Recipients.Any())
+                {
+                    context.Recipients.AddRange(
+                        new Recipient { RecipientId = 1, Name = "Hoang Huy Thang", Address = "Long Bien", Phone = "0985654488" },
+                       new Recipient { RecipientId = 2, Name = "Truong Cao Thien", Address = "Thanh Tri", Phone = "0985654488" }
+                    );
+                    context.SaveChanges();
+                }
+
                 UserProfile userProfile = context.UserProfiles.FirstOrDefault();
                 // Kiểm tra và thêm dữ liệu cho bảng Page
                 if (!context.Pages.Any() && userProfile !=null)
                 {
                     context.Pages.AddRange(
-                        new Page { PageId = 1, PageName = "YBA Gia Định", PageLink = "https://www.facebook.com/ChihoiYBA.GiaDinh",ProductId = 1, CreateBy = userProfile.UserId}   
+                        new Page { PageId = 1, PageName = "YBA Gia Định", PageLink = "https://www.facebook.com/ChihoiYBA.GiaDinh", ProductId = 1, CreateBy = userProfile.UserId, CreateAt = DateTime.Now.ToUniversalTime() } // Format chuẩn}   
                     );
+                    context.SaveChanges();
+                }
+                if(!context.RequestShippings.Any()&& userProfile != null)
+                {
+                    if (!context.ShippingInfos.Any())
+                    {
+                        context.ShippingInfos.Add(new ShippingInfo { ShippingInfoId = 1, SendMethod = "COD", Note = "Giao giờ hành chính", Status = RequestShippingStatusEnum.Pending,ShippingPartnerId =1 });
+                    }
+                    context.RequestShippings.Add(new RequestShipping { NgayChotDon = DateTime.Now.ToUniversalTime(), UserProfileUserId = userProfile.UserId, RecipientId = 1, PageId = 1, ProductId = 1, Status = RequestShippingStatusEnum.Pending, Quantity = 2, TotalPrice = 240000, ShippingInfoId = 1 });
                     context.SaveChanges();
                 }
             }

@@ -18,7 +18,7 @@ namespace CleanArchitectureExample.Domain.Entities
         public string SendMethod { get; set; }
         public string? TimeReceived { get; set; }
         public string? Note { get; set; }
-        public string DateSend { get; set; }
+        public string? DateSend { get; set; }
         public string? TrackingNumber { get; set; }
         public RequestShippingStatusEnum Status { get; set; } = RequestShippingStatusEnum.Pending;
         public List<ActionHistory> actionBies { get; set; }

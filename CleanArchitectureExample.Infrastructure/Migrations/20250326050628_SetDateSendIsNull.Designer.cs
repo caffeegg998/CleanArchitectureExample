@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitectureExample.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250325142046_InitONha")]
-    partial class InitONha
+    [Migration("20250326050628_SetDateSendIsNull")]
+    partial class SetDateSendIsNull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -294,7 +294,6 @@ namespace CleanArchitectureExample.Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ShippingInfoId"));
 
                     b.Property<string>("DateSend")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Note")
