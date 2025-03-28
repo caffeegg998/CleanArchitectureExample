@@ -40,6 +40,7 @@ namespace CleanArchitectureExample.Infrastructure.Persistence.SeedData
                 {
                     var product = new Product
                     {
+                        ProductId = 1,
                         ProductName = "Xịt giảm đau nhức xương khớp tức thì",
                         Description = "ĐAU ĐẦU GỐI NÊN DÙNG XỊT NÓNG HAY XỊT LẠNH?\r\n⚡ Đau đầu gối có thể do nhiều nguyên nhân như thoái hóa khớp, chấn thương, viêm khớp… Vậy khi nào nên dùng xịt nóng? Khi nào nên dùng xịt lạnh?\r\n🔥 Khi đau lâu ngày, không sưng không đỏ, hãy dùng XỊT NÓNG Mollifynovo Warm&Pain Relief Spray:\r\n✔️ Giúp giãn mạch máu, tăng cường lưu thông máu, giảm co cứng cơ.\r\n✔️ Phù hợp với đau do thoái hóa khớp, đau mạn tính, tê mỏi kéo dài.\r\n✔️ Không nên dùng khi khớp đang sưng viêm cấp tính.\r\n❄ Khi đầu gối sưng viêm to, đỏ rát hoặc vừa mới bị chấn thương trong vòng 48 giờ, hãy dùng XỊT LẠNH Mollifynovo Cold Spray:\r\n✔️ Giúp giảm viêm, giảm sưng, làm dịu cơn đau nhanh chóng.\r\n✔️ Thích hợp cho đau do chấn thương, bong gân, va đập, viêm khớp cấp.\r\n✔️ Không nên dùng khi đau do thoái hóa hoặc đau mạn tính lâu ngày.",
                         CreateAt = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), // Format chuẩn

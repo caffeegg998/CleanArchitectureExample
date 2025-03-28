@@ -236,112 +236,112 @@ interface expandedRows {
             </p-table>
         </div>
 
-        <div class="card">
-            <div class="font-semibold text-xl mb-4">Row Expansion</div>
-            <p-table [value]="products" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
-                <ng-template #caption>
-                    <button pButton icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}" label="{{ isExpanded ? 'Collapse All' : 'Expand All' }}" (click)="expandAll()"></button>
-                    <div class="flex table-header"></div>
-                </ng-template>
-                <ng-template #header>
-                    <tr>
-                        <th style="width: 3rem"></th>
-                        <th pSortableColumn="name">
-                            Name
-                            <p-sortIcon field="name"></p-sortIcon>
-                        </th>
-                        <th>Image</th>
-                        <th pSortableColumn="price">
-                            Price
-                            <p-sortIcon field="price"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="category">
-                            Category
-                            <p-sortIcon field="category"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="rating">
-                            Reviews
-                            <p-sortIcon field="rating"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="inventoryStatus">
-                            Status
-                            <p-sortIcon field="inventoryStatus"></p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-product let-expanded="expanded">
-                    <tr>
-                        <td>
-                            <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-                        </td>
-                        <td style="min-width: 12rem;">{{ product.name }}</td>
-                        <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" width="50" class="shadow-lg" /></td>
-                        <td style="min-width: 8rem;">{{ product.price | currency: 'USD' }}</td>
-                        <td style="min-width: 10rem;">{{ product.category }}</td>
-                        <td style="min-width: 10rem;">
-                            <p-rating [ngModel]="product.rating" [readonly]="true"></p-rating>
-                        </td>
-                        <td>
-                            <p-tag [value]="product.inventoryStatus.toLowerCase()" [severity]="getSeverity(product.inventoryStatus)" styleClass="dark:!bg-surface-900" />
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template #rowexpansion let-product>
-                    <tr>
-                        <td colspan="7">
-                            <div class="p-3">
-                                <p-table [value]="product.orders" dataKey="id" responsiveLayout="scroll">
-                                    <ng-template #header>
-                                        <tr>
-                                            <th pSortableColumn="id">
-                                                Id
-                                                <p-sortIcon field="price"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="customer">
-                                                Customer
-                                                <p-sortIcon field="customer"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="date">
-                                                Date
-                                                <p-sortIcon field="date"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="amount">
-                                                Amount
-                                                <p-sortIcon field="amount"></p-sortIcon>
-                                            </th>
-                                            <th pSortableColumn="stats">
-                                                Status
-                                                <p-sortIcon field="status"></p-sortIcon>
-                                            </th>
-                                            <th style="width: 4rem"></th>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template #body let-order>
-                                        <tr>
-                                            <td>{{ order.id }}</td>
-                                            <td>{{ order.customer }}</td>
-                                            <td>{{ order.date }}</td>
-                                            <td>{{ order.amount | currency: 'USD' }}</td>
-                                            <td>
-                                                <span [class]="'order-badge order-' + order.status.toLowerCase()">{{ order.status }}</span>
-                                            </td>
-                                            <td>
-                                                <p-button type="button" icon="pi pi-search"></p-button>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template #emptymessage>
-                                        <tr>
-                                            <td colspan="6">There are no order for this product yet.</td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+            <div class="card">
+                <div class="font-semibold text-xl mb-4">Row Expansion</div>
+                <p-table [value]="products" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
+                    <ng-template #caption>
+                        <button pButton icon="pi pi-fw {{ isExpanded ? 'pi-minus' : 'pi-plus' }}" label="{{ isExpanded ? 'Collapse All' : 'Expand All' }}" (click)="expandAll()"></button>
+                        <div class="flex table-header"></div>
+                    </ng-template>
+                    <ng-template #header>
+                        <tr>
+                            <th style="width: 3rem"></th>
+                            <th pSortableColumn="name">
+                                Name
+                                <p-sortIcon field="name"></p-sortIcon>
+                            </th>
+                            <th>Image</th>
+                            <th pSortableColumn="price">
+                                Price
+                                <p-sortIcon field="price"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="category">
+                                Category
+                                <p-sortIcon field="category"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="rating">
+                                Reviews
+                                <p-sortIcon field="rating"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="inventoryStatus">
+                                Status
+                                <p-sortIcon field="inventoryStatus"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-product let-expanded="expanded">
+                        <tr>
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            </td>
+                            <td style="min-width: 12rem;">{{ product.name }}</td>
+                            <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" width="50" class="shadow-lg" /></td>
+                            <td style="min-width: 8rem;">{{ product.price | currency: 'USD' }}</td>
+                            <td style="min-width: 10rem;">{{ product.category }}</td>
+                            <td style="min-width: 10rem;">
+                                <p-rating [ngModel]="product.rating" [readonly]="true"></p-rating>
+                            </td>
+                            <td>
+                                <p-tag [value]="product.inventoryStatus.toLowerCase()" [severity]="getSeverity(product.inventoryStatus)" styleClass="dark:!bg-surface-900" />
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template #rowexpansion let-product>
+                        <tr>
+                            <td colspan="7">
+                                <div class="p-3">
+                                    <p-table [value]="product.orders" dataKey="id" responsiveLayout="scroll">
+                                        <ng-template #header>
+                                            <tr>
+                                                <th pSortableColumn="id">
+                                                    Id
+                                                    <p-sortIcon field="price"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="customer">
+                                                    Customer
+                                                    <p-sortIcon field="customer"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="date">
+                                                    Date
+                                                    <p-sortIcon field="date"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="amount">
+                                                    Amount
+                                                    <p-sortIcon field="amount"></p-sortIcon>
+                                                </th>
+                                                <th pSortableColumn="stats">
+                                                    Status
+                                                    <p-sortIcon field="status"></p-sortIcon>
+                                                </th>
+                                                <th style="width: 4rem"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template #body let-order>
+                                            <tr>
+                                                <td>{{ order.id }}</td>
+                                                <td>{{ order.customer }}</td>
+                                                <td>{{ order.date }}</td>
+                                                <td>{{ order.amount | currency: 'USD' }}</td>
+                                                <td>
+                                                    <span [class]="'order-badge order-' + order.status.toLowerCase()">{{ order.status }}</span>
+                                                </td>
+                                                <td>
+                                                    <p-button type="button" icon="pi pi-search"></p-button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template #emptymessage>
+                                            <tr>
+                                                <td colspan="6">There are no order for this product yet.</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
 
         <div class="card">
             <div class="font-semibold text-xl mb-4">Grouping</div>
@@ -393,7 +393,77 @@ interface expandedRows {
                     </tr>
                 </ng-template>
             </p-table>
-        </div>`,
+        </div>
+
+    <div class="card">
+        <div class="font-semibold text-xl mb-4">Grouping</div>
+        <p-table
+            [value]="customers3"
+            sortField="country.name"
+            sortMode="single"
+            [scrollable]="true"
+            scrollHeight="400px"
+            rowGroupMode="subheader"
+            groupRowsBy="country.name"
+            [tableStyle]="{ 'min-width': '60rem' }">
+
+            <!-- Header -->
+            <ng-template #header>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Company</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </ng-template>
+
+            <!-- Group Header -->
+            <ng-template #groupheader let-customer>
+                <tr pRowGroupHeader>
+                    <td colspan="5">
+                        <div class="flex items-center gap-2">
+                            <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                                 [class]="'flag flag-' + customer.country.code"
+                                 style="width: 20px; vertical-align: middle;" />
+                            <span class="font-bold">{{ customer.country.name }}</span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <!-- Group Footer -->
+            <ng-template #groupfooter let-customer>
+                <tr>
+                    <td colspan="5" class="text-right font-bold pr-12">
+                        Total Customers: 2
+                    </td>
+                </tr>
+            </ng-template>
+
+            <!-- Body -->
+            <ng-template #body let-customer let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                                 [class]="'flag flag-' + customer.country.code"
+                                 style="width: 20px;" />
+                            <span>{{ customer.country.name }}</span>
+                        </div>
+                    </td>
+                    <td>{{ customer.company }}</td>
+                    <td>
+                        <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)" />
+                    </td>
+                    <td>{{ customer.date }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    `,
     styles: `
         .p-datatable-frozen-tbody {
             font-weight: bold;
@@ -411,6 +481,7 @@ export class TableDemo implements OnInit {
     customers2: Customer[] = [];
 
     customers3: Customer[] = [];
+
 
     selectedCustomers1: Customer[] = [];
 

@@ -11,7 +11,6 @@ namespace CleanArchitectureExample.Application.DTOs
         public string MarketName { get; set; }
         public int TotalRequest { get; set; }
         public TotalRequestStatus TotalRequestStatus { get; set; }
-        public int RequestPending { get; set; }
         public List<RequestShippingDTO> ListRequestShipping { get; set; }
     }
     public class TotalRequestStatus
